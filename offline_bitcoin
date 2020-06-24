@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+#
+# Copyright 2020 Christian Seberino
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+import crypto.ecdsa
+import tools.make_trans
+import tools.get_address
+import tools.revert_address
+import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.realpath(sys.argv[0]))
+ACCOUNTS = os.path.join(BASE_DIR, "accounts")
+CHOICES  = \
+"""
+What would you like to do?
+
+        1. Create an account.
+        2. Spend from an account.
+
+"""
+
+def create_account():
+        """
+        Creates accounts.
+        """
+
+        priv_key = crypto.ecdsa.make_private_key()
+        pub_key  = crypto.ecdsa.calc_public_key(priv_key)
+        address  = tools.get_address.hex_str(pub_key)
+        os.makedirs(ACCOUNTS, exist_ok = True)
+        open(os.path.join(ACCOUNTS, address), "w").write(str(priv_key))
+        print("\nAccount created with address {}.".format(address))
+
+def get_input_info(index):
+        """
+        Gets input information.
+        """
+
+        print("\n\tRegarding input #{}:".format(index))
+        inp_address    = input("\t\taddress? ").strip()
+        inp_trans_hash = input("\t\ttransaction hash? ")
+        inp_output_ind = input("\t\ttransaction output index? [0] ")
+        if not inp_output_ind:
+                inp_output_ind = "0"
+        priv_key       = open(os.path.join(ACCOUNTS, inp_address)).read()
+        priv_key       = int(priv_key)
+
+        return [inp_trans_hash.strip(),
+                int(inp_output_ind),
+                hex(priv_key)[2:],
+                crypto.ecdsa.calc_public_key(priv_key)]
+
+def get_output_info(index):
+        """
+        Gets output information.
+        """
+
+        print("\n\tRegarding output #{}:".format(index))
+        outp_address = input("\t\taddress? ").strip()
+        amount       = float(input("\t\tallocation amount? "))
+
+        return (tools.revert_address.hex_str(outp_address), amount)
+
+def spend_from_account():
+        """
+        Creates spending transactions.
+        """
+
+        n_inputs    = input("\nnumber of inputs? ")
+        input_info  = []
+        for i in range(int(n_inputs)):
+                input_info.append(get_input_info(str(i)))
+        n_outputs   = input("\nnumber of outputs? ")
+        output_info = []
+        for i in range(int(n_outputs)):
+                output_info.append(get_output_info(str(i)))
+        print("\nHere is the created spend transaction:")
+        print(tools.make_trans.hex_str(input_info, output_info))
+
+choice = input(CHOICES)
+if   choice == "1":
+        create_account()
+elif choice == "2":
+        spend_from_account()
