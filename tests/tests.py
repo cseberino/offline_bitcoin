@@ -150,10 +150,6 @@ class Tester(unittest.TestCase):
                         self.assertEqual(output, answer)
 
         def test_ecdsa_2(self):
-                """
-                test(s)
-                """
-
                 for i in range(5):
                         priv, pub = self.make_key_pair()
                         for j in range(100):
@@ -196,10 +192,6 @@ class Tester(unittest.TestCase):
                         self.assertEqual(output, answer)
 
         def test_get_address(self):
-                """
-                test(s)
-                """
-
                 public_key = \
             (0x50863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B2352,
              0x2CD470243453A299FA9E77237716103ABC11A1DF38855ED6F2EE187E9C582BA6)
@@ -229,10 +221,6 @@ class Tester(unittest.TestCase):
                 self.assertEqual(output, answer)
 
         def test_revert_address(self):
-                """
-                test(s)
-                """
-
                 address = "1KTS9utxJouo3ArXYaEuiZZkj9ZVaituE1"
                 output  = tools.revert_address.hex_str(address)
                 answer  = "ca72138a41c0b544377e683f08e473878fd3f597"
@@ -256,9 +244,6 @@ class Tester(unittest.TestCase):
                         self.assertEqual(output, answer)
 
         def test_make_trans(self):
-                """
-                test(s)
-                """
 
                 # Create a transaction.
                 src_trans_hash = \
