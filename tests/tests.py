@@ -32,9 +32,9 @@ import unittest
 import random
 import tempfile
 import importlib
+import warnings
 import subprocess
 import os
-import warnings
 
 DER_SEQ      = "30"
 DER_INT      = "02"
