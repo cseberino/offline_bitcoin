@@ -34,6 +34,7 @@ import tempfile
 import importlib
 import subprocess
 import os
+import warnings
 
 DER_SEQ      = "30"
 DER_INT      = "02"
@@ -43,6 +44,9 @@ PUB_KEY_SIZE = 64
 HEXADECIMAL  = 16
 
 class Tester(unittest.TestCase):
+        def setUp(self):
+                warnings.simplefilter("ignore", ResourceWarning)
+
         def random_bytes(self):
                 bytes_ = ""
                 length = random.randint(1, 1000)
@@ -657,5 +661,4 @@ class Tester(unittest.TestCase):
                 self.assertEqual(output, DER_INT)
                 self.assertEqual(answer, DER_INT)
 
-test_suite = unittest.makeSuite(Tester)
-unittest.TextTestRunner(verbosity = 2).run(test_suite)
+unittest.main()
