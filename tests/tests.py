@@ -241,7 +241,7 @@ class Tester(unittest.TestCase):
                         add    = tools.get_address.hex_str(pub)
                         output = tools.revert_address.hex_str(add)
 
-                        pub    = "".join("{:064x}".format(e) for e in pub)
+                        pub    = "".join(f"{e:064x}" for e in pub)
                         pub    = PUB_KEY_PRE + pub
                         answer = crypto.hash160.hex_str(binascii.unhexlify(pub))
 

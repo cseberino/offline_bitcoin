@@ -24,7 +24,7 @@ ADD_CHARS    = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 ADD_CHK_SIZE = 4
 PUB_KEY_PRE  = "04"
 ZERO         = "00"
-ZEROES_RE    = "({})*".format(ZERO)
+ZEROES_RE    = f"({ZERO})*"
 HEXADECIMAL  = 16
 
 def base_58_enc(number):
@@ -55,7 +55,7 @@ def hex_str(public_key):
         Calculates the addresses of public keys.
         """
 
-        public_key = "".join("{:064x}".format(e) for e in public_key)
+        public_key = "".join(f"{e:064x}" for e in public_key)
         public_key = PUB_KEY_PRE + public_key
         hash_      = crypto.hash160.hex_str(binascii.unhexlify(public_key))
 

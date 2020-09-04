@@ -161,4 +161,4 @@ def hex_str(bytes_):
                 H_[6] = mod_add(H_[6], g)
                 H_[7] = mod_add(H_[7], h)
 
-        return "".join(["{:08x}".format(e) for e in H_])
+        return "".join([f"{e:08x}" for e in H_])

@@ -43,14 +43,14 @@ def create_account():
         address  = tools.get_address.hex_str(pub_key)
         os.makedirs(ACCOUNTS, exist_ok = True)
         open(os.path.join(ACCOUNTS, address), "w").write(str(priv_key))
-        print("\nAccount created with address {}.".format(address))
+        print(f"\nAccount created with address {address}.")
 
 def get_input_info(index):
         """
         Gets input information.
         """
 
-        print("\n\tRegarding input #{}:".format(index))
+        print(f"\n\tRegarding input #{index}:")
         inp_address    = input("\t\taddress? ").strip()
         inp_trans_hash = input("\t\ttransaction hash? ")
         inp_output_ind = input("\t\ttransaction output index? [0] ")
@@ -69,7 +69,7 @@ def get_output_info(index):
         Gets output information.
         """
 
-        print("\n\tRegarding output #{}:".format(index))
+        print(f"\n\tRegarding output #{index}:")
         outp_address = input("\t\taddress? ").strip()
         amount       = float(input("\t\tallocation amount? "))
 
