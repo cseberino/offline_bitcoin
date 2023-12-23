@@ -42,7 +42,8 @@ def create_account():
         pub_key  = crypto.ecdsa.calc_public_key(priv_key)
         address  = tools.get_address.hex_str(pub_key)
         os.makedirs(ACCOUNTS, exist_ok = True)
-        open(os.path.join(ACCOUNTS, address), "w").write(str(priv_key))
+        with open(os.path.join(ACCOUNTS, address), "w") as f:
+                f.write(str(priv_key))
         print(f"\nAccount created with address {address}.")
 
 def get_input_info(index):
@@ -56,7 +57,8 @@ def get_input_info(index):
         inp_output_ind = input("\t\ttransaction output index? [0] ")
         if not inp_output_ind:
                 inp_output_ind = "0"
-        priv_key       = open(os.path.join(ACCOUNTS, inp_address)).read()
+        with open(os.path.join(ACCOUNTS, inp_address)) as f:
+                priv_key = f.read()
         priv_key       = int(priv_key)
 
         return [inp_trans_hash.strip(),

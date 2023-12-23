@@ -32,7 +32,6 @@ import unittest
 import random
 import tempfile
 import importlib
-import warnings
 import subprocess
 import os
 
@@ -44,9 +43,6 @@ PUB_KEY_SIZE = 64
 HEXADECIMAL  = 16
 
 class Tester(unittest.TestCase):
-        def setUp(self):
-                warnings.simplefilter("ignore", ResourceWarning)
-
         def random_bytes(self):
                 bytes_ = ""
                 length = random.randint(1, 1000)
